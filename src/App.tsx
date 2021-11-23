@@ -1,26 +1,32 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react'
+import { HashRouter, Route, Switch } from 'react-router-dom'
+import './scss/style.scss'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const loading = (
+  <div className="pt-3 text-center">
+    <div className="sk-spinner sk-spinner-pulse"></div>
+  </div>
+)
+
+// Containers
+const DefaultLayout = React.lazy(() => import('./layouts/DefaultLayout'))
+
+// Pages
+const Login = React.lazy(() => import('./pages/auth/login'))
+
+class App extends Component {
+  render() {
+    return (
+      <HashRouter>
+        <React.Suspense fallback={loading}>
+          <Switch>
+            <Route exact path="/login" render={(props: any) => <Login {...props} />} />
+            <Route path="/" render={(props: any) => <DefaultLayout {...props} />} />
+          </Switch>
+        </React.Suspense>
+      </HashRouter>
+    )
+  }
 }
 
-export default App;
+export default App
