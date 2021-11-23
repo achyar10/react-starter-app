@@ -1,13 +1,13 @@
 import 'react-app-polyfill/stable'
 import 'core-js'
 import ReactDOM from 'react-dom'
-import App from './App'
+import App from './app/App'
 import * as serviceWorker from './serviceWorker'
 import { Provider } from 'react-redux'
-import store from './store'
+import { AppStore } from './stores'
 
 ReactDOM.render(
-  <Provider store={store}>
+  <Provider store={AppStore}>
     <App />
   </Provider>,
   document.getElementById('root'),

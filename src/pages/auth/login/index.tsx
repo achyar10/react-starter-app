@@ -12,7 +12,7 @@ import {
 } from '@coreui/react'
 import Logo from '../../../assets/brand/logo.svg'
 import axios from 'axios'
-import { Alert } from '../../../utils/Helper'
+import { commonUtil } from '../../../utils'
 
 
 const Login = (props: any) => {
@@ -29,8 +29,8 @@ const Login = (props: any) => {
 
    const handleSubmit = async (e: any) => {
       e.preventDefault()
-      if (username === '') return Alert('Username tidak boleh kosong!')
-      if (password === '') return Alert('Password tidak boleh kosong!')
+      if (username === '') return commonUtil.showAllert('Username tidak boleh kosong!')
+      if (password === '') return commonUtil.showAllert('Password tidak boleh kosong!')
       setLoading(true)
       setTextLoading('Loading...')
       axios.post('api/auth/login', { phone: username, password })
@@ -39,7 +39,7 @@ const Login = (props: any) => {
             props.history.push('/')
          })
          .catch(err => {
-            Alert(err.response.data.message || err.message)
+            commonUtil.showAllert(err.response.data.message || err.message)
          })
       setLoading(false)
       setTextLoading('Login')

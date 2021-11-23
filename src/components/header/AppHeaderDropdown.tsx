@@ -11,7 +11,7 @@ import { cilLockLocked, cilUser } from '@coreui/icons'
 import CIcon from '@coreui/icons-react'
 import { Redirect } from 'react-router-dom'
 
-import avatar1 from '../../assets/brand/user.jpeg'
+import avatar1 from '../../assets/images/user.jpeg'
 
 const AppHeaderDropdown = () => {
 

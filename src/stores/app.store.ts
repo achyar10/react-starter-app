@@ -15,5 +15,4 @@ const changeState = (state: any = initialState, { type, ...rest }: { type: strin
     }
 }
 
-const store: Store = createStore(changeState)
-export default store
+export const AppStore: Store = createStore(changeState)

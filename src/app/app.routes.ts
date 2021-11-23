@@ -9,7 +9,7 @@ const routes = [
     { 
         path: '/dashboard', 
         name: 'Dashboard', 
-        component: lazy(() => import('./pages/dashboard'))
+        component: lazy(() => import('../pages/dashboard'))
     },
 ]
 

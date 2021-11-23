@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { HashRouter, Route, Switch } from 'react-router-dom'
-import './scss/style.scss'
+import '../styles/style.scss'
 
 const loading = (
   <div className="pt-3 text-center">
@@ -9,10 +9,10 @@ const loading = (
 )
 
 // Containers
-const DefaultLayout = React.lazy(() => import('./layouts/DefaultLayout'))
+const DefaultLayout = React.lazy(() => import('../layouts/DefaultLayout'))
 
 // Pages
-const Login = React.lazy(() => import('./pages/auth/login'))
+const Login = React.lazy(() => import('../pages/auth/login'))
 
 class App extends Component {
   render() {
