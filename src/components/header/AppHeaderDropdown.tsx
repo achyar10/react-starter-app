@@ -12,11 +12,15 @@ import CIcon from '@coreui/icons-react'
 import { Redirect } from 'react-router-dom'
 
 import avatar1 from '../../assets/images/user.jpeg'
+import { useAuthStore } from '../../stores'
 
 const AppHeaderDropdown = () => {
 
+    const auth = useAuthStore()
+
     const handleLogout = () => {
-        localStorage.removeItem('authJwt')
+        localStorage.removeItem('auth')
+        auth.unsetUser()
         return (<Redirect to="/login" />)
     }
 

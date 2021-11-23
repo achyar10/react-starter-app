@@ -11,38 +11,44 @@ import {
    CRow,
 } from '@coreui/react'
 import Logo from '../../../assets/brand/logo.svg'
-import axios from 'axios'
-import { commonUtil } from '../../../utils'
+import { localStorageUtil, toastUtil } from '../../../utils'
+import { authService } from '../../../services'
+import { useAuthStore } from '../../../stores'
 
 
 const Login = (props: any) => {
-   const [username, setUsername] = useState('')
-   const [password, setPassword] = useState('')
+   const auth = useAuthStore()
    const [loading, setLoading] = useState(false)
    const [textLoading, setTextLoading] = useState('Login')
+   const [state, setState] = useState({
+      username: '',
+      password: '',
+   })
 
    useEffect(() => {
-      if (localStorage.getItem('authJwt')) {
+      if (localStorageUtil.get('auth')) {
          props.history.push('/')
       }
    }, [props])
 
    const handleSubmit = async (e: any) => {
       e.preventDefault()
-      if (username === '') return commonUtil.showAllert('Username tidak boleh kosong!')
-      if (password === '') return commonUtil.showAllert('Password tidak boleh kosong!')
-      setLoading(true)
-      setTextLoading('Loading...')
-      axios.post('api/auth/login', { phone: username, password })
-         .then(rs => {
-            localStorage.setItem('authJwt', rs.data.data.access_token)
-            props.history.push('/')
-         })
-         .catch(err => {
-            commonUtil.showAllert(err.response.data.message || err.message)
-         })
-      setLoading(false)
-      setTextLoading('Login')
+      const { username, password } = state
+      try {
+         if (username === '') return toastUtil.useAlert('Username tidak boleh kosong!')
+         if (password === '') return toastUtil.useAlert('Password tidak boleh kosong!')
+         setLoading(true)
+         setTextLoading('Loading...')
+         const response = await authService.login({ username, password })
+         const random = Buffer.from(`${new Date().getTime()}:${Math.random()}`).toString('base64')
+         localStorageUtil.set('auth', random);
+         auth.setUser(response.data)
+         props.history.push('/')
+      } catch (error: any) {
+         setLoading(false)
+         setTextLoading('Login')
+         toastUtil.useAlert(error?.response?.data?.message || error?.message)
+      }
    }
 
    return (
@@ -61,10 +67,10 @@ const Login = (props: any) => {
                               <h3>Sign In</h3>
                               <p className="text-medium-emphasis">Your account</p>
                               <div className="mb-3">
-                                 <CFormInput className="not-rounded" type="text" id="username" placeholder="Username" autoComplete="off" autoFocus onChange={e => setUsername(e.target.value)} />
+                                 <CFormInput className="not-rounded" type="text" id="username" placeholder="Username" autoComplete="off" autoFocus onChange={e => setState({ ...state, username: e.target.value })} />
                               </div>
                               <div className="mb-3">
-                                 <CFormInput className="not-rounded" type="password" id="password" placeholder="Password" autoComplete="off" onChange={e => setPassword(e.target.value)} />
+                                 <CFormInput className="not-rounded" type="password" id="password" placeholder="Password" autoComplete="off" onChange={e => setState({ ...state, password: e.target.value })} />
                               </div>
                               <CRow>
                                  <CCol xs={12}>
