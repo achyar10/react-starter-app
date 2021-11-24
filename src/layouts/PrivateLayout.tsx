@@ -3,6 +3,8 @@ import { localStorageUtil } from "../utils";
 import jwtDecode from "jwt-decode";
 import moment from "moment";
 import { useAuthStore } from "../stores";
+import { instance } from "../services/instances";
+import { AxiosRequestConfig } from "axios";
 
 export interface IPayload {
     user_id: number,
@@ -18,6 +20,14 @@ const PrivateLayout = (props: any) => {
     const checkAuth = (): boolean => {
         if (auth.user) {
             const token: string = auth.user.access_token
+
+            instance.interceptors.request.use((config: AxiosRequestConfig) => {
+                config.headers = {
+                    Authorization: token ? `Bearer ${token}` : ''
+                }
+                return config;
+            });
+
             const decoded: IPayload = jwtDecode(token);
             const exp = moment.unix(decoded.exp)
             if (moment().isBefore(exp)) return true;

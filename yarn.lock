@@ -1927,6 +1927,13 @@
   dependencies:
     "@types/react" "*"
 
+"@types/react-js-pagination@^3.0.4":
+  "integrity" "sha512-yka+27eZ6Mg9cmwT2sADgLn3ij9hVfpPu5dk+Y/0k1xS52WZOz0LJnn4y4VKGmR4mf/tG5Ga7Dody/xmfiB0Fg=="
+  "resolved" "https://registry.npmjs.org/@types/react-js-pagination/-/react-js-pagination-3.0.4.tgz"
+  "version" "3.0.4"
+  dependencies:
+    "@types/react" "*"
+
 "@types/react-redux@^7.1.20":
   "integrity" "sha512-q42es4c8iIeTgcnB+yJgRTTzftv3eYYvCZOh1Ckn2eX/3o5TdsQYKUWpLoLuGlcY/p+VAhV9IOEZJcWk/vfkXw=="
   "resolved" "https://registry.npmjs.org/@types/react-redux/-/react-redux-7.1.20.tgz"

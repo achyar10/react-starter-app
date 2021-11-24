@@ -1,7 +1,6 @@
 import { History } from 'history';
-import axios, { AxiosRequestConfig } from 'axios';
+import axios from 'axios';
 import { commonUtil, localStorageUtil } from '../utils';
-import { LoginResponse } from './auth';
 
 const { baseUrl } = commonUtil.getEnv();
 
@@ -12,13 +11,6 @@ export const instance = axios.create({
     },
 });
 
-instance.interceptors.request.use((config: AxiosRequestConfig) => {
-    const token = localStorageUtil.get<LoginResponse['data']>('auth')?.access_token;
-    config.headers = {
-        Authorization: token ? `Bearer ${token}` : ''
-    }
-    return config;
-});
 
 export const setupInterceptors = (history: History<any>) => {
     instance.interceptors.response.use((resp) => {
@@ -46,6 +38,14 @@ export const setupInterceptors = (history: History<any>) => {
 export interface BaseResponse {
     status: number;
     message: string;
+    meta: IMeta
+}
+
+export interface IMeta {
+    page: number;
+    limit: number;
+    totalDocs: number;
+    totalPages: number;
 }
 
 export interface BasePagination {

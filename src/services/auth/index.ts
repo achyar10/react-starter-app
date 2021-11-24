@@ -13,5 +13,8 @@ export interface LoginResponse extends BaseResponse {
         access_token: string;
     };
 }
-
-export const login = (payload: LoginPayload): Promise<LoginResponse> => instance.post('/auth/login', payload, { auth: payload }).then((response) => response.data);
+const url = '/auth/login'
+export const login = async (payload: LoginPayload): Promise<LoginResponse> => {
+    const response = await instance.post(url, payload, { auth: payload });
+    return response.data;
+}

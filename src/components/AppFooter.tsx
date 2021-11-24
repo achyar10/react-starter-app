@@ -3,7 +3,7 @@ import { CFooter } from '@coreui/react'
 
 const AppFooter = () => {
     return (
-        <CFooter>
+        <CFooter className="footer-color">
             <div>
                 <span className="ms-1">&copy; Copyright {new Date().getFullYear()}</span>
             </div>
